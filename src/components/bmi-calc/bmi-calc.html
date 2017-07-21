@@ -1,0 +1,69 @@
+<!-- Generated template for the BmiCalcComponent component -->
+<h1>BMI</h1>
+
+<ion-item>
+  <ion-label floating>BMI</ion-label>
+  <ion-input
+    [(ngModel)]="bmi"
+    (keyup.enter)="onUpdate('bmi')"
+    (ionBlur)="onUpdate('bmi')"
+  ></ion-input>
+</ion-item>
+
+<button *ngIf="!useCalculator" ion-button (click)="calculate(true)">Calculate</button>
+<ion-grid *ngIf="useCalculator">
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label floating>Ht (cm)</ion-label>
+        <ion-input
+          [(ngModel)]="cm"
+          (keyup.enter)="onUpdate('cm')"
+          (ionBlur)="onUpdate('cm')"
+        ></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label floating>Ht (ft)</ion-label>
+        <ion-input
+          type="number"
+          [(ngModel)]="ft"
+          (keyup.enter)="onUpdate('ft')"
+          (ionBlur)="onUpdate('ft')"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Ht (in)</ion-label>
+        <ion-input
+          type="number"
+          [(ngModel)]="inch"
+          (keyup.enter)="onUpdate('inch')"
+          (ionBlur)="onUpdate('inch')"
+        ></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label floating>Wt (kg)</ion-label>
+        <ion-input
+          [(ngModel)]="kg"
+          (keyup.enter)="onUpdate('kg')"
+          (ionBlur)="onUpdate('kg')"
+        ></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label floating>Wt (lbs)</ion-label>
+        <ion-input
+          [(ngModel)]="lb"
+          (keyup.enter)="onUpdate('lb')"
+          (ionBlur)="onUpdate('lb')"
+        ></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-grid>

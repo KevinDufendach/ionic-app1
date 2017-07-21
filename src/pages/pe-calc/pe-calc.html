@@ -1,0 +1,30 @@
+<!--
+  Generated template for the PeCalcPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Pre-Eclampsia Calculator</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-list-header>CS Probability: {{probability}}</ion-list-header>
+    <ion-item>
+      <ion-label>Favorable Cervix</ion-label>
+      <ion-toggle [(ngModel)]="favorableCervix"></ion-toggle>
+      <button ion-button>Calculate</button>
+    </ion-item>
+  </ion-list>
+  <p>{{myVar}}</p>
+  <custom-input [(ngModel)]="myVar"></custom-input>
+  <label>Standard input:</label>
+  <input [(ngModel)]="myVar">
+  <bmi-calc></bmi-calc>
+</ion-content>
