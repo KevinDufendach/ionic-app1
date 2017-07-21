@@ -1,5 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, forwardRef, OnInit} from '@angular/core';
 import {BmiCalcModel, lengthUnits, massUnits} from './bmi-calc.model';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+
+const noop = () => {};
+
+export const BMI_CONTROL_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => BmiCalcComponent),
+  multi: true
+};
 
 /**
  * Generated class for the BmiCalcComponent component.
@@ -9,9 +18,10 @@ import {BmiCalcModel, lengthUnits, massUnits} from './bmi-calc.model';
  */
 @Component({
   selector: 'bmi-calc',
-  templateUrl: 'bmi-calc.html'
+  templateUrl: 'bmi-calc.html',
+  providers: [BMI_CONTROL_VALUE_ACCESSOR]
 })
-export class BmiCalcComponent implements OnInit {
+export class BmiCalcComponent implements ControlValueAccessor {
   bmiModel = new BmiCalcModel();
 
   cm: string = '';
@@ -22,21 +32,25 @@ export class BmiCalcComponent implements OnInit {
   bmi: string;
   useCalculator: Boolean = false;
 
-  constructor() {
-  }
+  //Placeholders for the callbacks which are later provided
+  //by the Control Value Accessor
+  private onTouchedCallback: () => void = noop;
+  private onChangeCallback: (_: any) => void = noop;
 
-  ngOnInit() {
-    this.bmiModel.setWt(65);
-    this.bmiModel.setHt(1.6);
-
-    this.updateBmi();
-    this.updateMetricLength();
-    this.updateStdLength();
-    this.updateMetricWt();
-    this.updateStdWt();
-  }
+  // ngOnInit() {
+  //   this.bmiModel.setWt(65);
+  //   this.bmiModel.setHt(1.6);
+  //
+  //   this.updateBmi();
+  //   this.updateMetricLength();
+  //   this.updateStdLength();
+  //   this.updateMetricWt();
+  //   this.updateStdWt();
+  // }
 
   onUpdate(value: string): void {
+    let initialBmi = this.bmiModel.getBmi();
+
     switch (value) {
       case 'inch':
       case 'ft':
@@ -64,6 +78,10 @@ export class BmiCalcComponent implements OnInit {
         this.bmiModel.setBmi(Number(this.bmi));
         this.updateStdWt();
         this.updateMetricWt();
+    }
+
+    if (initialBmi !== this.bmiModel.getBmi()) {
+      this.onChangeCallback(this.bmiModel.getBmi());
     }
 
   }
@@ -94,5 +112,22 @@ export class BmiCalcComponent implements OnInit {
 
   calculate(useCalc: Boolean) {
     this.useCalculator = useCalc;
+  }
+
+  writeValue(value: any): void {
+    if (value !== this.bmiModel.getBmi()) {
+      this.bmiModel.setBmi(value);
+      this.updateMetricWt();
+      this.updateStdWt();
+      this.updateBmi();
+    }
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChangeCallback = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouchedCallback = fn;
   }
 }

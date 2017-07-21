@@ -48,7 +48,7 @@ export class CustomInputComponent implements ControlValueAccessor {
   //From ControlValueAccessor interface
   writeValue(value: any) {
     if (value !== this.innerValue) {
-      this.innerValue = value + "written";
+      this.innerValue = value;
     }
   }
 
