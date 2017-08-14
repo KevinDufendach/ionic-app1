@@ -37,6 +37,7 @@ export class BmiCalcComponent implements ControlValueAccessor {
   private onTouchedCallback: () => void = noop;
   private onChangeCallback: (_: any) => void = noop;
 
+  // TODO Set some defaults
   // ngOnInit() {
   //   this.bmiModel.setWt(65);
   //   this.bmiModel.setHt(1.6);
